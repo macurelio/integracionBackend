@@ -1,0 +1,6 @@
+com\challenge\users\model\UserTest.class
+com\challenge\users\service\UserServiceTest.class
+com\challenge\users\repository\UserRepositoryTest.class
+com\challenge\users\controller\UserControllerTest.class
+com\challenge\users\dto\UserRequestTest.class
+com\challenge\users\security\JwtTokenProviderTest.class

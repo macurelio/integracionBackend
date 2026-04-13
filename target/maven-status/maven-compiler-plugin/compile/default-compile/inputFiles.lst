@@ -1,0 +1,11 @@
+C:\integracionBackend\src\main\java\com\challenge\users\controller\UserController.java
+C:\integracionBackend\src\main\java\com\challenge\users\UserApiApplication.java
+C:\integracionBackend\src\main\java\com\challenge\users\model\Phone.java
+C:\integracionBackend\src\main\java\com\challenge\users\model\User.java
+C:\integracionBackend\src\main\java\com\challenge\users\service\UserService.java
+C:\integracionBackend\src\main\java\com\challenge\users\repository\UserRepository.java
+C:\integracionBackend\src\main\java\com\challenge\users\dto\UserResponse.java
+C:\integracionBackend\src\main\java\com\challenge\users\security\JwtTokenProvider.java
+C:\integracionBackend\src\main\java\com\challenge\users\dto\UserRequest.java
+C:\integracionBackend\src\main\java\com\challenge\users\exception\GlobalExceptionHandler.java
+C:\integracionBackend\src\main\java\com\challenge\users\dto\PhoneDTO.java
