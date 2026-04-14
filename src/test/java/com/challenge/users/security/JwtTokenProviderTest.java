@@ -13,30 +13,30 @@ class JwtTokenProviderTest {
     @BeforeEach
     void setUp() {
         tokenProvider = new JwtTokenProvider();
-        // Injecting mock values for the test
+        // Inyectando valores simulados para la prueba
         ReflectionTestUtils.setField(tokenProvider, "jwtSecret", "testSecretKeyTestSecretKeyTestSecretKeyTestSecretKeyTestSecretKey");
         ReflectionTestUtils.setField(tokenProvider, "jwtExpirationMs", 3600000);
     }
 
     @Test
     void generateToken_ReturnsNonNullToken() {
-        // Act
+        // Ejecutar
         String token = tokenProvider.generateToken("test@dominio.cl");
 
-        // Assert
+        // Verificar
         assertNotNull(token);
         assertFalse(token.isEmpty());
-        // Verify it looks like a JWT (3 parts separated by dots)
+        // Verificar que tenga formato JWT (3 partes separadas por puntos)
         assertEquals(3, token.split("\\.").length);
     }
 
     @Test
     void generateToken_DifferentEmails_ProduceDifferentTokens() {
-        // Act
+        // Ejecutar
         String token1 = tokenProvider.generateToken("user1@dominio.cl");
         String token2 = tokenProvider.generateToken("user2@dominio.cl");
 
-        // Assert
+        // Verificar
         assertNotEquals(token1, token2);
     }
 }

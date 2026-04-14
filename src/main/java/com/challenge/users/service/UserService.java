@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * Service class for handling user-related business logic and validations.
+ * Servicio para la lógica de negocio y validaciones relacionadas con usuarios.
  */
 @Service
 @Slf4j
@@ -30,7 +30,7 @@ public class UserService {
     @Value("${app.validation.password-regex}")
     private String passwordRegex;
 
-    /** Email regex requirement: aaaaaaa@dominio.cl */
+    /** Requisito de regex para email: aaaaaaa@dominio.cl */
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@dominio\\.cl$";
 
     public UserService(UserRepository userRepository, JwtTokenProvider tokenProvider) {
@@ -39,21 +39,21 @@ public class UserService {
     }
 
     /**
-     * Handles the business logic for registering a new user including validations and persistence.
-     * 
-     * @param request The registration request details.
-     * @return The response containing generated UUID, timestamps, and token.
-     * @throws RuntimeException if validation fails or email already exists.
+     * Gestiona la lógica de negocio para registrar un nuevo usuario, incluyendo validaciones y persistencia.
+     *
+     * @param request Detalles de la solicitud de registro.
+     * @return Respuesta con UUID generado, timestamps y token.
+     * @throws RuntimeException si la validación falla o el correo ya existe.
      */
     @Transactional
     public UserResponse registerUser(UserRequest request) {
-        log.debug("Starting registration process for email: {}", request.getEmail());
-        
+        log.debug("Iniciando proceso de registro para el correo: {}", request.getEmail());
+
         validateEmail(request.getEmail());
         validatePassword(request.getPassword());
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            log.warn("Registration failed: Email {} is already registered", request.getEmail());
+            log.warn("Registro fallido: El correo {} ya está registrado", request.getEmail());
             throw new RuntimeException("El correo ya registrado");
         }
 
@@ -81,7 +81,7 @@ public class UserService {
             user.setPhones(phones);
         }
 
-        log.debug("Saving user to database...");
+        log.debug("Guardando usuario en la base de datos...");
         User savedUser = userRepository.save(user);
 
         return UserResponse.builder()
@@ -95,21 +95,21 @@ public class UserService {
     }
 
     /**
-     * Validates that the email follows the required domain pattern.
+     * Valida que el correo siga el patrón de dominio requerido.
      */
     private void validateEmail(String email) {
         if (!Pattern.matches(EMAIL_REGEX, email)) {
-            log.warn("Email validation failed for: {}", email);
+            log.warn("Validación de correo fallida para: {}", email);
             throw new RuntimeException("Formato de correo inválido (debe ser aaaaaaa@dominio.cl)");
         }
     }
 
     /**
-     * Validates that the password meets the complexity requirements.
+     * Valida que la contraseña cumpla con los requisitos de complejidad.
      */
     private void validatePassword(String password) {
         if (!Pattern.matches(passwordRegex, password)) {
-            log.warn("Password complexity validation failed");
+            log.warn("Validación de complejidad de contraseña fallida");
             throw new RuntimeException("Formato de contraseña inválido");
         }
     }

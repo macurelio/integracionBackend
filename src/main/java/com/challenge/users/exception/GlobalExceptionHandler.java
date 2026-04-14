@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * Global Exception Handler to capture all application exceptions and transform them into 
- * standard JSON error messages in the format {"mensaje": "..."}.
+ * Manejador global de excepciones para capturar todos los errores de la aplicación y transformarlos
+ * en mensajes de error JSON estándar con el formato {"mensaje": "..."}.
  */
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
     /**
-     * Standard error response format as required by the challenge.
+     * Formato estándar de respuesta de error según lo requerido por el desafío.
      */
     @Data
     @Builder
@@ -31,30 +31,30 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles custom business logic exceptions (RuntimeExceptions).
+     * Maneja excepciones de lógica de negocio personalizadas (RuntimeExceptions).
      */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException e) {
-        log.error("Business validation error: {}", e.getMessage());
+        log.error("Error de validación de negocio: {}", e.getMessage());
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     /**
-     * Handles JSR-303 validation errors (e.g. @NotEmpty).
+     * Maneja errores de validación JSR-303 (por ejemplo, @NotEmpty).
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         String errorMessage = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
-        log.error("Request validation error: {}", errorMessage);
+        log.error("Error de validación de solicitud: {}", errorMessage);
         return new ResponseEntity<>(new ErrorResponse(errorMessage), HttpStatus.BAD_REQUEST);
     }
 
     /**
-     * Handles any other unexpected system errors.
+     * Maneja cualquier otro error inesperado del sistema.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception e) {
-        log.error("Unexpected system error: ", e);
+        log.error("Error inesperado del sistema: ", e);
         return new ResponseEntity<>(new ErrorResponse("Ocurrió un error inesperado: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

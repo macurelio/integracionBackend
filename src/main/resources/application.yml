@@ -16,14 +16,14 @@ spring:
       ddl-auto: update
     show-sql: true
 
-# Configurable regex and JWT secret
+ # Expresión regular configurable y secreto JWT
 app:
   validation:
-    # Default password regex: minimum 8 characters, at least one letter and one number
+    # Expresión regular por defecto para contraseña: mínimo 8 caracteres, al menos una letra y un número
     password-regex: "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
   security:
     jwt-secret: "myVerySecretKeyForJwtTokenGenerationMyVerySecretKeyForJwtTokenGeneration"
-    jwt-expiration-ms: 86400000 # 24 hours
+    jwt-expiration-ms: 86400000 # 24 horas
 
 server:
   port: 8080

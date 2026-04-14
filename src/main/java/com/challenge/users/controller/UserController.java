@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 /**
- * REST Controller for user registration and management.
+ * Controlador REST para el registro y gestión de usuarios.
  */
 @RestController
 @RequestMapping("/api/users")
-@Tag(name = "User Registration", description = "API for user creation and management")
+@Tag(name = "Registro de Usuarios", description = "API para la creación y gestión de usuarios")
 @Slf4j
 public class UserController {
 
@@ -31,17 +31,17 @@ public class UserController {
     }
 
     /**
-     * Registers a new user in the system.
-     * 
-     * @param request The user registration data.
-     * @return The created user details with JWT token.
+     * Registra un nuevo usuario en el sistema.
+     *
+     * @param request Datos de registro del usuario.
+     * @return Detalles del usuario creado con el token JWT.
      */
     @PostMapping("/register")
     @Operation(summary = "Register a new user")
     public ResponseEntity<UserResponse> register(@Valid @RequestBody UserRequest request) {
-        log.info("Received registration request for email: {}", request.getEmail());
+        log.info("Solicitud de registro recibida para el correo: {}", request.getEmail());
         UserResponse response = userService.registerUser(request);
-        log.info("User registered successfully with ID: {}", response.getId());
+        log.info("Usuario registrado exitosamente con ID: {}", response.getId());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

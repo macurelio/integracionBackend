@@ -18,7 +18,7 @@ class UserRepositoryTest {
 
     @Test
     void findByEmail_ReturnsUser() {
-        // Arrange
+        // Preparar
         User user = User.builder()
                 .name("Juan")
                 .email("juan@dominio.cl")
@@ -27,17 +27,17 @@ class UserRepositoryTest {
                 .build();
         userRepository.save(user);
 
-        // Act
+        // Ejecutar
         Optional<User> found = userRepository.findByEmail("juan@dominio.cl");
 
-        // Assert
+        // Verificar
         assertTrue(found.isPresent());
         assertEquals("Juan", found.get().getName());
     }
 
     @Test
     void existsByEmail_ReturnsTrue() {
-        // Arrange
+        // Preparar
         User user = User.builder()
                 .name("Juan")
                 .email("exists@dominio.cl")
@@ -45,19 +45,19 @@ class UserRepositoryTest {
                 .build();
         userRepository.save(user);
 
-        // Act
+        // Ejecutar
         boolean exists = userRepository.existsByEmail("exists@dominio.cl");
 
-        // Assert
+        // Verificar
         assertTrue(exists);
     }
 
     @Test
     void existsByEmail_NonExistent_ReturnsFalse() {
-        // Act
+        // Ejecutar
         boolean exists = userRepository.existsByEmail("nonexistent@dominio.cl");
 
-        // Assert
+        // Verificar
         assertFalse(exists);
     }
 }

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Component for JWT token generation and management.
+ * Componente para la generación y gestión de tokens JWT.
  */
 @Component
 @Slf4j
@@ -24,13 +24,13 @@ public class JwtTokenProvider {
     private int jwtExpirationMs;
 
     /**
-     * Generates a JWT token for the given user email.
-     * 
-     * @param email The user's email.
-     * @return A signed JWT token.
+     * Genera un token JWT para el correo electrónico del usuario dado.
+     *
+     * @param email Correo electrónico del usuario.
+     * @return Un token JWT firmado.
      */
     public String generateToken(String email) {
-        log.debug("Generating token for: {}", email);
+        log.debug("Generando token para: {}", email);
         Map<String, Object> claims = new HashMap<>();
         return Jwts.builder()
                 .setClaims(claims)

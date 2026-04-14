@@ -34,7 +34,7 @@ class UserServiceTest {
 
     @Test
     void registerUser_Success() {
-        // Arrange
+        // Preparar
         UserRequest request = UserRequest.builder()
                 .name("Test User")
                 .email("test@dominio.cl")
@@ -45,10 +45,10 @@ class UserServiceTest {
         when(userRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
         when(tokenProvider.generateToken(any())).thenReturn("mock-token");
 
-        // Act
+        // Ejecutar
         UserResponse response = userService.registerUser(request);
 
-        // Assert
+        // Verificar
         assertNotNull(response);
         assertEquals("mock-token", response.getToken());
         verify(userRepository, times(1)).save(any());
@@ -56,7 +56,7 @@ class UserServiceTest {
 
     @Test
     void registerUser_EmailAlreadyExists_ThrowsException() {
-        // Arrange
+        // Preparar
         UserRequest request = UserRequest.builder()
                 .name("Test User")
                 .email("existing@dominio.cl")
@@ -65,35 +65,35 @@ class UserServiceTest {
 
         when(userRepository.existsByEmail(any())).thenReturn(true);
 
-        // Act & Assert
+        // Ejecutar y Verificar
         Exception exception = assertThrows(RuntimeException.class, () -> userService.registerUser(request));
         assertEquals("El correo ya registrado", exception.getMessage());
     }
 
     @Test
     void registerUser_InvalidEmail_ThrowsException() {
-        // Arrange
+        // Preparar
         UserRequest request = UserRequest.builder()
                 .name("Test User")
                 .email("test@other.com")
                 .password("password123")
                 .build();
 
-        // Act & Assert
+        // Ejecutar y Verificar
         Exception exception = assertThrows(RuntimeException.class, () -> userService.registerUser(request));
         assertTrue(exception.getMessage().contains("Formato de correo inválido"));
     }
 
     @Test
     void registerUser_InvalidPassword_ThrowsException() {
-        // Arrange
+        // Preparar
         UserRequest request = UserRequest.builder()
                 .name("Test User")
                 .email("test@dominio.cl")
                 .password("short")
                 .build();
 
-        // Act & Assert
+        // Ejecutar y Verificar
         Exception exception = assertThrows(RuntimeException.class, () -> userService.registerUser(request));
         assertEquals("Formato de contraseña inválido", exception.getMessage());
     }
